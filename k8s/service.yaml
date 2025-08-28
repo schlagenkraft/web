@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ski-website
+  namespace: ski-website
+  labels:
+    app: ski-website
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
+  selector:
+    app: ski-website
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ski-website-internal
+  namespace: ski-website
+  labels:
+    app: ski-website
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
+  selector:
+    app: ski-website

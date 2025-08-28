@@ -1,0 +1,92 @@
+# Project instructions (keep private)
+CLAUDE.md
+
+# Environment variables (contains secrets)
+.env
+.env.local
+.env.production
+.env.*
+!.env.example
+
+# SSL Certificates and keys
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+dhparam.pem
+certbot/conf/
+certbot/www/.well-known/
+
+# Kubernetes secrets
+kubeconfig
+*.kubeconfig
+k8s/secrets/
+k8s/*-secret.yaml
+k8s/*-secrets.yaml
+
+# Docker
+docker-compose.local.yml
+docker-compose.override.yml
+
+# IDE and system files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+nginx/logs/
+/var/log/
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+tmp/
+temp/
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# Private notes
+notes.txt
+TODO.txt
+private/
+
+# Node modules (if you add any frontend build tools later)
+node_modules/
+dist/
+build/
+
+# Python (if you add any Python scripts)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Terraform state (if you use Terraform)
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Ansible (if you use Ansible)
+*.retry
+ansible/vault.yml
+
+# CI/CD
+.github/secrets/
+.gitlab/secrets/
+
+# Custom SSL configurations with sensitive data
+nginx/ssl/*-private.conf
+nginx/ssl/custom-*.conf
