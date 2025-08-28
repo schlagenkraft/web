@@ -1,0 +1,3 @@
+primary color: 230054
+second color: FF9D27
+background color: D0D0D0
