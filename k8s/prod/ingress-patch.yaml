@@ -2,36 +2,32 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ski-website
-  namespace: ski-website
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    external-dns.alpha.kubernetes.io/hostname: "www.ski.dev"
 spec:
-  ingressClassName: nginx
   tls:
   - hosts:
-    - example.com
-    - www.example.com
-    secretName: ski-website-tls
+    - www.ski.dev
+    - ski.dev
+    secretName: ski-website-prod-tls
   rules:
-  - host: example.com
+  - host: www.ski.dev
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ski-website
+            name: prod-ski-website
             port:
               number: 80
-  - host: www.example.com
+  - host: ski.dev
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ski-website
+            name: prod-ski-website
             port:
               number: 80

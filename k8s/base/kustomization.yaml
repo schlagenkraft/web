@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Don't set global namespace - let each resource define its own
+# The ski-website resources already have namespace: ski-website set
+
+resources:
+  - namespace.yaml
+  - cert-manager/
+  - dns/
+  - service.yaml
+  - deployment.yaml
+  - ingress.yaml
+
+labels:
+  - pairs:
+      app: ski-website
+      managed-by: kustomize
+    includeSelectors: true
+
+images:
+  - name: ghcr.io/schlagenkraft/web/ski-website
+    newTag: simple

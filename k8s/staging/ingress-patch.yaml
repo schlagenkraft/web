@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ski-website
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "staging.ski.dev"
+spec:
+  tls:
+  - hosts:
+    - staging.ski.dev
+    secretName: ski-website-staging-tls
+  rules:
+  - host: staging.ski.dev
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: staging-ski-website
+            port:
+              number: 80

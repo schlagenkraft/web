@@ -16,16 +16,14 @@ spec:
         app: ski-website
     spec:
       imagePullSecrets:
-      - name: ghcr-secret
+      - name: ghcr-io-cred
       containers:
       - name: nginx
-        image: ghcr.io/schlagenkraft/ski-website:latest
+        image: ghcr.io/schlagenkraft/web/ski-website:simple
         imagePullPolicy: Always
         ports:
         - containerPort: 80
           name: http
-        - containerPort: 443
-          name: https
         resources:
           requests:
             cpu: 100m
@@ -33,21 +31,11 @@ spec:
           limits:
             cpu: 500m
             memory: 256Mi
-        volumeMounts:
-        - name: nginx-config
-          mountPath: /etc/nginx/nginx.conf
-          subPath: nginx.conf
-        - name: ssl-config
-          mountPath: /etc/nginx/ssl/ssl-params.conf
-          subPath: ssl-params.conf
-        - name: ssl-certs
-          mountPath: /etc/letsencrypt
-          readOnly: true
         livenessProbe:
           httpGet:
             path: /
             port: 80
-          initialDelaySeconds: 30
+          initialDelaySeconds: 10
           periodSeconds: 10
         readinessProbe:
           httpGet:
@@ -55,14 +43,3 @@ spec:
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
-      volumes:
-      - name: nginx-config
-        configMap:
-          name: nginx-config
-      - name: ssl-config
-        configMap:
-          name: nginx-ssl-config
-      - name: ssl-certs
-        secret:
-          secretName: ssl-certificates
-          optional: true

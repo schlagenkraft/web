@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ski-website
+  namespace: ski-website
+  annotations:
+    cert-manager.io/cluster-issuer: "ski-dev-issuer"
+    external-dns.alpha.kubernetes.io/hostname: "dev.ski.dev"
+    metallb.universe.tf/allow-shared-ip: "true"
+    metallb.universe.tf/address-pool: k3s-pool
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - dev.ski.dev
+    secretName: ski-website-tls
+  rules:
+  - host: dev.ski.dev
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ski-website
+            port:
+              name: http
