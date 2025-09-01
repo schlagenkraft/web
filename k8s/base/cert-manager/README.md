@@ -4,7 +4,6 @@
 - `03-k8s-secret-cloudflare-ski-dev.yaml` - Cloudflare API token secret for ski.dev
 - `04-issuer-manifest-cloudflare-ski-dev.yaml` - ClusterIssuer for ski.dev domain
 - `05-cert-request-ski-dev.yaml` - Certificate request for ski.dev and *.ski.dev
-- `05-cert-request-tunnel-ski-dev.yaml` - Certificate request for tunnel.ski.dev and *.tunnel.ski.dev
 
 ## Creating Cloudflare API Token
 
@@ -70,7 +69,6 @@ kubectl apply -f ski-dev/04-issuer-manifest-cloudflare-ski-dev.yaml
 4. Apply the certificate requests:
 ```bash
 kubectl apply -f ski-dev/05-cert-request-ski-dev.yaml
-kubectl apply -f ski-dev/05-cert-request-tunnel-ski-dev.yaml
 ```
 
 ## Verify the setup:
