@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ski-website
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "www.ski.dev"
+spec:
+  tls:
+  - hosts:
+    - www.ski.dev
+    - ski.dev
+    secretName: ski-website-prod-tls
+  rules:
+  - host: www.ski.dev
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: prod-ski-website
+            port:
+              number: 80
+  - host: ski.dev
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: prod-ski-website
+            port:
+              number: 80
