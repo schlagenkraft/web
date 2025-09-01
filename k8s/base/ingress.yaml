@@ -9,6 +9,7 @@ metadata:
     metallb.universe.tf/allow-shared-ip: "true"
     metallb.universe.tf/address-pool: k3s-pool
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
     - dev.ski.dev
