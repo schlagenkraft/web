@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# ClusterIssuer is cluster-scoped, don't set namespace
+
+resources:
+  # Secret must be created manually - see setup-secrets.sh
+  # - 03-k8s-secret-cloudflare-ski-dev.yaml  
+  - 04-issuer-manifest-cloudflare-ski-dev.yaml
+  - 05-cert-request-ski-dev.yaml
+
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: ski-website
+      app.kubernetes.io/managed-by: kustomize
+    includeSelectors: false

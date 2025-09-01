@@ -1,0 +1,13 @@
+# clusterrolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: external-dns-ski-dev-viewer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: external-dns-ski-dev # <-- This must match the name of the ClusterRole you create
+subjects:
+  - kind: ServiceAccount
+    name: external-dns-ski-dev # <-- The name of your ServiceAccount
+    namespace: external-dns # <-- The namespace of your ServiceAccount

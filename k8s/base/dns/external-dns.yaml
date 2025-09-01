@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns-ski-dev
+  namespace: external-dns
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: external-dns-ski-dev
+  template:
+    metadata:
+      labels:
+        app: external-dns-ski-dev
+    spec:
+      serviceAccountName: external-dns-ski-dev
+      containers:
+        - name: external-dns
+          image: registry.k8s.io/external-dns/external-dns:v0.17.0
+          args:
+            - --source=service
+            - --source=ingress
+            - --domain-filter=ski.dev
+            - --provider=cloudflare
+            - --cloudflare-dns-records-per-page=5000
+            - --log-level=debug
+            - --registry=txt
+            - --txt-owner-id=external-dns-ski-dev
+            - --managed-record-types=A
+            - --managed-record-types=AAAA
+            - --policy=sync
+            - --request-timeout=30s
+            - --min-event-sync-interval=5s
+            - --events
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
+          env:
+            - name: CF_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-api-secret-ski-dev
+                  key: CF_API_TOKEN
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 7979
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 7979
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane

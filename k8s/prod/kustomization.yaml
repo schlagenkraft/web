@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: ski-website
+# Don't override namespace - resources define their own
 
 resources:
   - ../base

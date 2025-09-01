@@ -1,0 +1,17 @@
+# Secrets - never commit these!
+*secret*.yaml
+*-secret.yaml
+*-secrets.yaml
+secrets/
+.env
+*.env
+
+# Temporary/backup files
+*.bak
+*.tmp
+*.swp
+*~
+
+# Keep example files
+!*secret*.example.yaml
+!*-secret.example.yaml

@@ -5,8 +5,10 @@ metadata:
   namespace: ski-website
   labels:
     app: ski-website
+  annotations:
+    metallb.universe.tf/address-pool: k3s-pool
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: ski-website
   ports:

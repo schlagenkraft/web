@@ -4,19 +4,17 @@ metadata:
   name: ski-website
   namespace: ski-website
   annotations:
-    cert-manager.io/cluster-issuer: "carverauto-issuer"
+    cert-manager.io/cluster-issuer: "ski-dev-issuer"
+    external-dns.alpha.kubernetes.io/hostname: "dev.ski.dev"
     metallb.universe.tf/allow-shared-ip: "true"
     metallb.universe.tf/address-pool: k3s-pool
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
-  ingressClassName: nginx
   tls:
   - hosts:
-    - ski.example.com
+    - dev.ski.dev
     secretName: ski-website-tls
   rules:
-  - host: ski.example.com
+  - host: dev.ski.dev
     http:
       paths:
       - path: /
@@ -25,4 +23,4 @@ spec:
           service:
             name: ski-website
             port:
-              number: 80
+              name: http
